@@ -1,9 +1,13 @@
 html, body {
   height: 100%;
   margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+width: 70%;
 }
 #map{
   height: 500px;
   width: 500px ;
   margin: 0;
+
 }

@@ -2,7 +2,9 @@
 session_start();
 
 
-	echo "
+
+
+echo "
 
 <html>
 <head>
@@ -61,8 +63,10 @@ function codeAddress(address) {
 
 			var marker = new google.maps.Marker({
 				map: map,
-				position: results[0].geometry.location
+				position: results[0].geometry.location,
+				title: 'salchicha'
 			});
+
 		} else {
 			//alert('Geocode was not successful for the following //reason: ' + status);
 		}
@@ -77,7 +81,11 @@ function codeAddress(address) {
 
 	<h1>Buscar tweets</h1>
 
-	
+	<form id='form' action='connect.php' method='post'>
+	<input title='busqueda' name ='busqueda' type ='text'>
+	<input type='submit' value='Encuentra tweets'>
+	</form>
+
 
 	$_SESSION[row_count_0];
 	

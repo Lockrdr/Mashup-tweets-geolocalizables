@@ -14,7 +14,7 @@ $settings = array(
 //$url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
 $url="https://api.twitter.com/1.1/search/tweets.json";
 $requestMethod = "GET";
-$getfield = '?q=%23MayThe4thBeWithYou&count=100';
+$getfield = '?q='.$_POST["busqueda"].'&count=100';
 //$getfield = '?screen_name=iagdotme&count=20';
 $twitter = new TwitterAPIExchange($settings);
 
@@ -32,6 +32,9 @@ foreach($string["statuses"] as $items)
        {
 	     //	echo $items['text']."<br />";
         echo $items['user']['location']."<br /><hr />";
+        //echo $items['text'];
+
+        
 
       
 
