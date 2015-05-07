@@ -35,7 +35,7 @@ google.maps.event.addDomListener(window, 'load', function(){
 		mapTypeId: google.maps.MapTypeId.TERRAIN 
 	};
 
-	map=new google.maps.Map(document.getElementById('map'), mapOptions);
+map=new google.maps.Map(document.getElementById('map'), mapOptions);
 
 
 

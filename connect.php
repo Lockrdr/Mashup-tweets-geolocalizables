@@ -1,6 +1,105 @@
 
 <?php
 session_start();
+
+function getInnerSubstring($string,$delim){
+    // "foo a foo" becomes: array(""," a ","")
+    $string = explode($delim, $string, 3); // also, we only need 2 items at most
+    // we check whether the 2nd is set and return it, otherwise we return an empty string
+    return isset($string[1]) ? $string[1] : '';
+}
+
+
+function getWeatherByCoordinates($lat,$lng)
+{
+
+$url = "http://www.myweather2.com/developer/forecast.ashx?uac=zThV.WApjN&query=".$lat.",".$lng;
+
+
+  $ch = curl_init( $url );
+    
+  curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
+  curl_setopt( $ch, CURLOPT_HEADER, true );
+  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+  
+
+  
+  list( $header, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', curl_exec( $ch ), 2 );
+  
+  $status = curl_getinfo( $ch );
+  
+  curl_close( $ch );
+
+
+  // Split header text into an array.
+  $header_text = preg_split( '/[\r\n]+/', $header );
+
+
+  
+  // $data will be serialized into JSON data.
+  $data = array();
+  
+
+
+  // Set the JSON data object contents, decoding it from JSON if possible.
+  $decoded_json = json_decode( $contents );
+  $data['contents'] = $decoded_json ? $decoded_json : $contents;
+  
+  // Generate appropriate content-type header.
+  $is_xhr = false;
+  header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'x-javascript' ) );
+
+
+  // Generate JSON/JSONP string
+  $json = json_encode( $data );
+     substr(substr($data["contents"],0,290),63);
+
+
+  $weatherString = getInnerSubstring($data["contents"],"curren_weather");
+  $tempString = substr(substr(getInnerSubstring($weatherString,"temp"),1),0,-2);
+  $skyStatus = substr(substr(getInnerSubstring($weatherString,"text"),1),0,-10);
+
+  $weatherConditions=[
+
+    "temp" =>$tempString,
+    "skyStatus" =>$skyStatus,
+
+  ];
+
+
+  return $weatherConditions;
+
+}
+class geocoder{
+    static private $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=";
+
+    static public function getLocation($address){
+        $url = self::$url.urlencode($address);
+        
+        $resp_json = self::curl_file_get_contents($url);
+        $resp = json_decode($resp_json, true);
+
+        if($resp['status']=='OK'){
+            return $resp['results'][0]['geometry']['location'];
+        }else{
+            return false;
+        }
+    }
+
+
+    static private function curl_file_get_contents($URL){
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_URL, $URL);
+        $contents = curl_exec($c);
+        curl_close($c);
+
+        if ($contents) return $contents;
+            else return FALSE;
+    }
+}
+
+
 require_once('TwitterAPIExchange.php');
 
 $settings = array(
@@ -14,7 +113,11 @@ $settings = array(
 //$url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
 $url="https://api.twitter.com/1.1/search/tweets.json";
 $requestMethod = "GET";
-$getfield = '?q='.$_POST["busqueda"].'&count=100';
+
+//$getfield = '?q='.$_POST["busqueda"].'&count=100';
+$getfield = '?q=#starwars&count=100';
+
+
 //$getfield = '?screen_name=iagdotme&count=20';
 $twitter = new TwitterAPIExchange($settings);
 
@@ -26,6 +129,9 @@ $string = json_decode($twitter->setGetfield($getfield)
 //if($string["errors"][0]["message"] != "") {echo "<h3>Sorry, there was a problem.</h3><p>Twitter returned the following error message:</p><p><em>".$string[errors][0]["message"]."</em></p>";exit();}
 $count =0;
 
+ 
+ 
+
 foreach($string["statuses"] as $items)
     {
        if($items['user']['location']!="")
@@ -33,6 +139,21 @@ foreach($string["statuses"] as $items)
 	     //	echo $items['text']."<br />";
         echo $items['user']['location']."<br /><hr />";
         //echo $items['text'];
+       
+        $loc = geocoder::getLocation(urlencode($items['user']['location']));
+       
+        if($loc["lat"]!=""&&$loc["lng"]!="")
+        {
+           echo $loc["lat"]."---".$loc["lng"];
+           $weatherConditions = getWeatherByCoordinates($loc["lat"],$loc["lng"]);
+           print_r($weatherConditions);
+        }
+        else
+        {
+          echo "no se enccontro";
+        }
+      
+    
 
         
 
@@ -44,7 +165,7 @@ foreach($string["statuses"] as $items)
         
     }
 
-    header ("Location: index.php"); 
+    //header ("Location: index.php"); 
 /*
 echo "<pre>";
 print_r($string);
