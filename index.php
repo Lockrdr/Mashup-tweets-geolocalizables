@@ -37,16 +37,35 @@ google.maps.event.addDomListener(window, 'load', function(){
 
 map=new google.maps.Map(document.getElementById('map'), mapOptions);
 
+var lat;
+var lng;
+var temp;
 
 
+";
 
-codeAddress('caracas');";
-
-for ($x = 0; $x <= 20; $x++) 
+for ($x = 0; $x <= $_SESSION['total']; $x++) 
 	{
 
-    	echo  "codeAddress(".'"'.$_SESSION["row_count_$x"].'");';
+		if($_SESSION['row_count_'.$x]!= null){
+			echo"
+
+			lat = ".$_SESSION['row_count_'.$x]['coords']['lat'].";
+			lng = ".$_SESSION['row_count_'.$x]['coords']['lng'].";
+			temp = ".$_SESSION['row_count_'.$x]['temp'].";
+
+
+			";
+	    	echo  "codeAddress(lat,lng,temp)";
+		}
+		else{
+
+
+		}
 	}
+
+
+
 
 echo"
 
@@ -54,23 +73,13 @@ echo"
 });
 
 
-function codeAddress(address) {
+function codeAddress(myLat,myLng,temp) {
 
-
-	var address= address;
-	geocoder.geocode( { 'address': address}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-
-			var marker = new google.maps.Marker({
-				map: map,
-				position: results[0].geometry.location,
-				title: 'salchicha'
-			});
-
-		} else {
-			//alert('Geocode was not successful for the following //reason: ' + status);
-		}
-	});
+	var marker = new google.maps.Marker({
+			map: map,
+			position: {lat: myLat, lng: myLng},
+			title: temp.toString()+' grados'
+		});
 }
 
 </script>
@@ -87,7 +96,7 @@ function codeAddress(address) {
 	</form>
 
 
-	$_SESSION[row_count_0];
+	
 	
 
 	<div id='map'></div>
