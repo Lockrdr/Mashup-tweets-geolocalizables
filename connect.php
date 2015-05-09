@@ -112,8 +112,7 @@ function getInnerSubstring($string,$delim){
    $url="https://api.twitter.com/1.1/search/tweets.json";
    $requestMethod = "GET";
 
-$getfield = '?q='. $twitterQuery .'&count=100';
-  // $getfield = '?q=#starwars&count=100';
+  $getfield = '?q='. $twitterQuery .'&count=50';
 
 
    $twitter = new TwitterAPIExchange($settings);
@@ -163,13 +162,12 @@ $getfield = '?q='. $twitterQuery .'&count=100';
 for($i =0;$i< $_SESSION["total"];$i++)
 {
   print_r($_SESSION["row_count_".$i]);
-}
-*/
+}*/
+//print_r($items);
   header ("Location: index.php");  
 
 }
-searchData($_POST["busqueda"]);
-
+searchData($_REQUEST["busqueda"]);
  
 ?>
 
