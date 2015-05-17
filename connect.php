@@ -124,9 +124,6 @@ function getInnerSubstring($string,$delim){
     ->performRequest(),$assoc = TRUE);
 
 
-
-
-
    $count =0;
    foreach($string["statuses"] as $items)
    {
@@ -144,18 +141,24 @@ function getInnerSubstring($string,$delim){
         "temp" => $weatherConditions["temp"],
         "skyStatus" => $weatherConditions["skyStatus"],
         "location" => $items['user']['location'],
-        "Tweet" => $items['text']
+        "Tweet" => $items['text'],
+        "user" => $items['user']['name'],
+        "profileImage" =>$items['user']['profile_image_url'],
+        "createdAt" => $items['user']['created_at'],
+        "screenName" => $items['user']['screen_name']
+
         );
      }
      else
      {
-      $_SESSION["row_count_".$count] =null;
+      $_SESSION["row_count_".$count] = null;
     }
 
 
     $count++;
   }
   $_SESSION["total"]=$count;
+  $_SESSION["topic"]=$twitterQuery;
 
 }
 /*
@@ -168,6 +171,7 @@ for($i =0;$i< $_SESSION["total"];$i++)
 
 }
 searchData($_REQUEST["busqueda"]);
+//searchData("playstation4");
  
 ?>
 
