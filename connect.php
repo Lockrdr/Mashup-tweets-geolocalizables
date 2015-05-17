@@ -144,7 +144,7 @@ function getInnerSubstring($string,$delim){
         "Tweet" => $items['text'],
         "user" => $items['user']['name'],
         "profileImage" =>$items['user']['profile_image_url'],
-        "createdAt" => $items['user']['created_at'],
+        "createdAt" => $items['created_at'],
         "screenName" => $items['user']['screen_name']
 
         );
