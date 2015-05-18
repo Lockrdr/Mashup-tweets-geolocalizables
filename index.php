@@ -1,6 +1,9 @@
 <html>
 <head>
-	<title>TweetGeolocalizables</title>
+	<title>Tweets Geolocalizables</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="css/default.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
 </head>
 <script src='https://maps.googleapis.com/maps/api/js?sensor=false'></script>
 <link rel='stylesheet' href='style.css'>
@@ -118,17 +121,41 @@ if(array_key_exists('total',$_SESSION)){
 </script>
 
 <body>
+	
+	<div id="view">
+		<div id="head">
+			<div align=center id="main">
+			  <h1><a >Geolocalizable Tweets</a></h1>
+			</div>
+		</div>
+		
+		 <div id="content">
+			<div id="contentBlock">
+			  <div class="item mainItem">
+					<br>
+					<h1>Search Words in Tweets</h1>
+					<br>
 
-	<h1>Buscar tweets</h1>
+					<form id='form' action='connect.php' method='post'>
+					<input title='busqueda' name ='busqueda' type ='text'>
+					<input id ="tweetWord" type='submit' value=' Find Tweets '>
+					</form>
 
-	<form id='form' action='connect.php' method='post'>
-	<input title='busqueda' name ='busqueda' type ='text'>
-	<input type='submit' value='Encuentra tweets'>
-	</form>
-
-	<h2 id='tituloQuery'></h2>
-
-	<div id="map" style = "width:800px;height:800px;"></div>
+					<h2 id='tituloQuery'></h2>
+					<br>
+					<div id="map" style = "width:715px;height:715px;"></div>
+			  </div>
+			</div>
+		 </div>
+		 
+	  <div id="foot">
+		<p class="fl">&copy; all rights reserved</p>
+		<p class="fr">created by Ricardo de la Rosa Vivas y Daniel Ruiz Manero <img src="img/penguin.png" style="width:15px;"></p>
+	  </div>
+	  
+	</div>
+	
+	<div align=center>This Web Page has been created for the SC second practice</div>
 
 
 </body>
