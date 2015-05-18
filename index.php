@@ -70,7 +70,8 @@ var skyStatus;
 <?php
 session_start();
 
-for ($x = 0; $x <= $_SESSION['total']-1; $x++) 
+if(array_key_exists('total',$_SESSION)){
+	for ($x = 0; $x <= $_SESSION['total']-1; $x++) 
 	{
 
 		if($_SESSION['row_count_'.$x]!= null){
@@ -109,7 +110,7 @@ for ($x = 0; $x <= $_SESSION['total']-1; $x++)
 		}
 		
 	}
-
+} 
 ?>
 });
 
