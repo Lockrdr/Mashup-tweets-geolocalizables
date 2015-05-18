@@ -127,11 +127,12 @@ function getInnerSubstring($string,$delim){
    $count =0;
    foreach($string["statuses"] as $items)
    {
+     //Make sure there is a location in the tweet
      if($items['user']['location']!="")
      {
 
       $loc = geocoder::getLocation(urlencode($items['user']['location']));
-
+     //Make sure that the location on the tweet is a real place
       if($loc["lat"]!=""&&$loc["lng"]!="")
       {
 
