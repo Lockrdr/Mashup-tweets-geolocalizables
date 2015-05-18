@@ -2,7 +2,8 @@
 <?php
 session_start();
 
-function getInnerSubstring($string,$delim){
+function getInnerSubstring($string,$delim)
+{
     // "foo a foo" becomes: array(""," a ","")
     $string = explode($delim, $string, 3); // also, we only need 2 items at most
     // we check whether the 2nd is set and return it, otherwise we return an empty string
@@ -161,18 +162,12 @@ function getInnerSubstring($string,$delim){
   $_SESSION["total"]=$count;
   $_SESSION["topic"]=$twitterQuery;
 
-}
-/*
-for($i =0;$i< $_SESSION["total"];$i++)
-{
-  print_r($_SESSION["row_count_".$i]);
-}*/
-//print_r($items);
+ }
   header ("Location: index.php");  
-
 }
+
 searchData($_REQUEST["busqueda"]);
-//searchData("playstation4");
+
  
 ?>
 

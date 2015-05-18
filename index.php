@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
 </head>
 <script src='https://maps.googleapis.com/maps/api/js?sensor=false'></script>
-<link rel='stylesheet' href='style.css'>
+<link rel='stylesheet' href='css/style.css'>
 <script type='text/javascript' src='lib/jquery-1.11.2.js'></script>
 <script>
 
@@ -86,7 +86,7 @@ if(array_key_exists('total',$_SESSION)){
 			screenName = '".$_SESSION['row_count_'.$x]["screenName"]."';
 			createdAt = '".$_SESSION['row_count_'.$x]["createdAt"]."';
 			profileImage = '".$_SESSION['row_count_'.$x]["profileImage"]."';
-			location = '".$_SESSION['row_count_'.$x]["location"]."';
+			location = ".json_encode($_SESSION['row_count_'.$x]["location"]).";
 			skyStatus = '".$_SESSION['row_count_'.$x]["skyStatus"]."';
 
 		
