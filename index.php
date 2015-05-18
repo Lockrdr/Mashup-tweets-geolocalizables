@@ -133,7 +133,7 @@ if(array_key_exists('total',$_SESSION)){
 			<div id="contentBlock">
 			  <div class="item mainItem">
 					<br>
-					<h1>Search Words in Tweets</h1>
+					<h1>Search Inside Tweets</h1>
 					<br>
 
 					<form id='form' action='connect.php' method='post'>
